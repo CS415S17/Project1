@@ -207,9 +207,9 @@ def divide(X, Y):
     (q, r) = divide(div2(X), Y)
     q = add(q, q)
     r = add(r, r)
-    if (not even(X)):
+    if not ( even(X)):
         r = add(r, [1])
-    if (not compare(r, Y) == 2):
+    if not ( compare(r, Y) == 2):
         r = sub(r, Y)
         q = add(q, [1])
     return (q, r)
@@ -291,17 +291,47 @@ def problem2(A, B, C, D):
     print("CD: ", bin2dec(CD))
     (q, r) = divide(AB, CD)
     # print("q, r: ", (q, r))
-    return (q, r)
+    return (bin2dec(q), bin2dec(r))
 
+
+def gcd(A, B):
+    if (B == []):
+        return A
+    q, r = divide(A, B)
+    return gcd(B, r)
+
+
+def problem3(A):
+    P = [1]
+    Q = [1]
+    R = [1]
+    S = [0, 1]
+    for i in range(A -1):
+        (P, Q) = problem3help(P, Q, R, S)
+        S = add(S, [1])
+    value = gcd(P, Q)
+    print("value: " , value)
+    quit()
+    return (divide(P, value), divide(Q, value))
+
+def problem3help(P, Q, R, S):
+
+    numerator = add(mult(P, S), mult(Q, R))
+    denom = mult(Q, S)
+    return(numerator, denom)
 
 def main():
 
     # answer = problem1(dec2bin(25), dec2bin(25), dec2bin(24), dec2bin(2))
-    answer = problem2(dec2bin(50), dec2bin(3), dec2bin(2), dec2bin(4))
+    #answer = problem2(dec2bin(5), dec2bin(3), dec2bin(5), dec2bin(2))
     # answer = expo(dec2bin(24), dec2bin(3))
+    answer = problem3(3)
     print("result: ", (answer))
 
 
 main()
+
+
+
 
 
